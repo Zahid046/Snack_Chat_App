@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:snack_chat/service/auth/auth_state.dart';
 import 'package:snack_chat/ui/auth/auth_dialog.dart';
 import 'package:snack_chat/ui/auth/login_view_model.dart';
 import 'package:snack_chat/ui/auth/signup.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   final String title;
@@ -38,68 +38,71 @@ class _LoginPageState extends State<LoginPage> {
 
     return Padding(
       padding: EdgeInsets.all(24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Log In',
-            textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "Don\'t have an account? ",
-                textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.grey.shade100),
-              ),
-              TextButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.symmetric(vertical: 0, horizontal: 2)),
-                ),
-                onPressed: () => _handleCreateAccount(context),
-                child: Text(
-                  "Create one here.",
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Log In',
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headline5,
+            ),
+            Row(
+              children: <Widget>[
+                Text(
+                  "Don\'t have an account? ",
                   textAlign: TextAlign.start,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.grey.shade100),
+                ),
+                TextButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 2)),
+                  ),
+                  onPressed: () => _handleCreateAccount(context),
+                  child: Text(
+                    "Create one here.",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            TextField(
+              textInputAction: TextInputAction.next,
+              obscureText: false,
+              decoration: InputDecoration(
+                labelStyle: TextStyle(color: Colors.grey.shade100),
+                border: OutlineInputBorder(),
+                labelText: 'Email',
+              ),
+              onChanged: (value) => viewModel.email = value,
+            ),
+            SizedBox(height: 16),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                labelStyle: TextStyle(color: Colors.grey.shade100),
+                border: OutlineInputBorder(),
+                labelText: 'Password',
+              ),
+              onChanged: (value) => viewModel.password = value,
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => viewModel.loginUser(),
+                child: Text(
+                  'Log in'.toUpperCase(),
+                  style: TextStyle(color: Colors.grey.shade100),
                 ),
               ),
-            ],
-          ),
-          TextField(
-            textInputAction: TextInputAction.next,
-            obscureText: false,
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: Colors.grey.shade100),
-              border: OutlineInputBorder(),
-              labelText: 'Email',
-            ),
-            onChanged: (value) => viewModel.email = value,
-          ),
-          SizedBox(height: 16),
-          TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: Colors.grey.shade100),
-              border: OutlineInputBorder(),
-              labelText: 'Password',
-            ),
-            onChanged: (value) => viewModel.password = value,
-          ),
-          SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => viewModel.loginUser(),
-              child: Text(
-                'Log in'.toUpperCase(),
-                style: TextStyle(color: Colors.grey.shade100),
-              ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
