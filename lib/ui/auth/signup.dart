@@ -55,6 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
               'Sign Up',
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5,
+              //textDirection: Axis.vertical,
             ),
             SizedBox(height: 16),
             TextFormField(
